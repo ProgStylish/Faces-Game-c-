@@ -27,14 +27,15 @@ Game::Game(MainWindow& wnd)
 	wnd(wnd),
 	gfx(wnd),
 	rng(rd()),
-	xRange(0, 770),
-	yRange(0, 570),
+	xRange(30.0f, 770.0f),
+	yRange(30.0f, 570.0f),
+	speedRange(-2.5f * 60.0f, 2.5f * 60.0f),
 	square(xRange(rng), yRange(rng)),
-	face0(xRange(rng), yRange(rng), 2, 2),
-	face1(xRange(rng), yRange(rng), 2, 2),
-	face2(xRange(rng), yRange(rng), 2, 2),
-	raticle(Graphics::ScreenWidth/2, Graphics::ScreenHeight/2)
+	raticle(Graphics::ScreenWidth / 2, Graphics::ScreenHeight / 2)
 {
+	for (int i = 0; i < nFaces; i++) {
+		faces[i].init(xRange(rng), yRange(rng), speedRange(rng), speedRange(rng));
+	}
 }
 
 
@@ -48,24 +49,25 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+
+	const float deltaTime = frameTime.mark();
+
 	if (wnd.kbd.KeyIsPressed(VK_SPACE)) {
-		if (face0.isAlive()) {
-			face0.setAlive(testShootOnFace(raticle, face0));
-		}
-		if (face1.isAlive()) {
-			face1.setAlive(testShootOnFace(raticle, face1));
-		}
-		if (face2.isAlive()) {
-			face2.setAlive(testShootOnFace(raticle, face2));
+		for (int i = 0; i < nFaces; i++) {
+			if (faces[i].isAlive()) {
+				faces[i].setAlive(testShootOnFace(raticle, faces[i]));
+			}
 		}
 	}
 
 	raticle.update(wnd.kbd);
 	square.shiftBackground();
 
-	face0.move();
-	face2.move();
-	face1.move();
+	for (int i = 0; i < nFaces; i++) {
+		if (faces[i].isAlive()) {
+			faces[i].move(deltaTime);
+		}
+	}
 
 	raticle.shiftRaticle(wnd.kbd.KeyIsPressed(VK_SHIFT));
 	raticle.clamp();
@@ -81,14 +83,10 @@ void Game::ComposeFrame()
 	else {
 		raticle.drawCrossRaticle(gfx);
 	}
-	if (face0.isAlive()) {
-		face0.draw(gfx);
-	}
-	if (face1.isAlive()) {
-		face1.draw(gfx);
-	}
-	if (face2.isAlive()) {
-		face2.draw(gfx);
+	for (int i = 0; i < nFaces; i++) {
+		if (faces[i].isAlive()) {
+			faces[i].draw(gfx);
+		}
 	}
 }
 

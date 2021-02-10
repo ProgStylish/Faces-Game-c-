@@ -1,21 +1,21 @@
 #include "Square.h"
 #include "Graphics.h"
 
-Square::Square(int in_x, int in_y)
+Square::Square(float in_x, float in_y)
 {
 	x = in_x;
 	y = in_y;
 }
 
-void Square::reSpawn(int in_x, int in_y) {
+void Square::reSpawn(float in_x, float in_y) {
 	x = in_x;
 	y = in_y;
 }
 
 void Square::draw(Graphics& gfx) const {
-	for (int j = y; j < y + size; j++)
+	for (int j = (int)y; j < int(y + size); j++)
 	{
-		for (int i = x; i < x + size; i++)
+		for (int i = (int)x; i < int(x + size); i++)
 		{
 			gfx.PutPixel(i, j, 255, g, b);
 		}
@@ -30,17 +30,17 @@ void Square::shiftBackground() {
 	b += vgb;
 }
 
-int Square::getX() const
+float Square::getX() const
 {
 	return x;
 }
 
-int Square::getY() const
+float Square::getY() const
 {
 	return y;
 }
 
-int Square::getSize() const
+float Square::getSize() const
 {
 	return size;
 }

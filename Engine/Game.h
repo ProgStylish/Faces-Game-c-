@@ -26,6 +26,7 @@
 #include "Face.h"
 #include "Raticle.h"
 #include "Square.h"
+#include "FrameTime.h"
 #include <random>
 
 class Game
@@ -50,11 +51,12 @@ private:
 	/********************************/
 	std::random_device rd;
 	std::mt19937 rng;
-	std::uniform_int_distribution<int> xRange;
-	std::uniform_int_distribution<int> yRange;
-	Face face0;
-	Face face1;
-	Face face2;
+	std::uniform_real_distribution<float> xRange;
+	std::uniform_real_distribution<float> yRange;
+	std::uniform_real_distribution<float> speedRange;
+	static constexpr int nFaces = 10;
+	Face faces[nFaces];
 	Raticle raticle;
 	Square square;
+	FrameTime frameTime;
 };

@@ -2,24 +2,24 @@
 #include "Graphics.h"
 class Face {
 public:
-	Face(int x, int y, int vx, int vy);
-	void move();
+	void init(float x, float y, float vx, float vy);
+	void move(float deltaTime);
 	void draw(Graphics& gfx) const;
 	static constexpr int screenWidth = Graphics::ScreenWidth;
 	static constexpr int screenHeight = Graphics::ScreenHeight;
 	bool isAlive();
-	int getX() const;
-	int getY() const;
-	int getVX() const;
-	int getVY() const;
-	static int getSize();
+	float getX() const;
+	float getY() const;
+	float getVX() const;
+	float getVY() const;
+	static float getSize();
 	void setAlive(bool flag);
 private:
-	int x = 0;
-	int y = 0;
-	int vx = 2;
-	int vy = 2;
-	static const int size = 23;
+	float x;
+	float y;
+	float vx;
+	float vy;
+	static constexpr float size = 23.0f;
 	bool alive = false;
 
 	void clampX();

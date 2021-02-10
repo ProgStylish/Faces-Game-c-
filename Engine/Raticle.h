@@ -3,25 +3,25 @@
 #include "Keyboard.h"
 class Raticle {
 public:
-	Raticle(int x, int y);
+	Raticle(float x, float y);
 	void clamp();
 	void clampX();
 	void clampY();
 	void drawCrossRaticle(Graphics& gfx);
 	void drawSquaredRaticle(Graphics& gfx);
 	void update(Keyboard& kbd);
-	int getX() const;
-	int getY() const;
-	int getSize() const;
+	float getX() const;
+	float getY() const;
+	float getSize() const;
 	bool getShape() const;
 	void shiftRaticle(bool flag);
-	void setX(int x);
-	void setY(int y);
+	void setX(float x);
+	void setY(float y);
 
 private:
-	int x = Graphics::ScreenWidth / 2;
-	int y = Graphics::ScreenHeight / 2;
-	int size = 6;
+	float x = Graphics::ScreenWidth / 2;
+	float y = Graphics::ScreenHeight / 2;
+	float size = 6;
 	int r = 255;
 	int g = 0;
 	int b = 0;
