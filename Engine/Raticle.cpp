@@ -4,28 +4,22 @@
 
 void Raticle::update(Keyboard& kbd) {
 	if (kbd.KeyIsPressed(VK_UP)) {
-		y -= 3;
+		position.y -= 3;
 	}
 
 	if (kbd.KeyIsPressed(VK_DOWN)) {
-		y += 3;
+		position.y += 3;
 	}
 
 	if (kbd.KeyIsPressed(VK_RIGHT)) {
-		x += 3;
+		position.x += 3;
 	}
 
 	if (kbd.KeyIsPressed(VK_LEFT)) {
-		x -= 3;
+		position.x -= 3;
 	}
 }
 
-float Raticle::getX() const{
-	return x;
-}
-float Raticle::getY() const{
-	return y;
-}
 float Raticle::getSize() const{
 	return size;
 }
@@ -34,21 +28,18 @@ void Raticle::shiftRaticle(bool flag) {
 	shape = flag;
 }
 
-void Raticle::setX(float in_x) {
-	x = in_x;
+Vec2 Raticle::getPosition() const
+{
+	return position;
 }
 
-void Raticle::setY(float in_y) {
-	y = in_y;
-}
 bool Raticle::getShape() const{
 	return shape;
 }
 
-Raticle::Raticle(float in_x, float in_y)
+Raticle::Raticle(Vec2& in_position)
 {
-	x = in_x;
-	y = in_y;
+	position = in_position;
 }
 
 void Raticle::clamp() {
@@ -58,27 +49,27 @@ void Raticle::clamp() {
 
 void Raticle::clampX()
 {
-	if (x - size <= 0) {
-		x = size;
+	if (position.x - size <= 0) {
+		position.x = size;
 	}
-	else if (x + size >= Graphics::ScreenWidth) {
-		x = Graphics::ScreenWidth - size;
+	else if (position.x + size >= Graphics::ScreenWidth) {
+		position.x = Graphics::ScreenWidth - size;
 	}
 }
 
 void Raticle::clampY()
 {
-	if (y - size <= 0) {
-		y = size;
+	if (position.y - size <= 0) {
+		position.y = size;
 	}
-	else if (y + size >= Graphics::ScreenHeight) {
-		y = Graphics::ScreenHeight - size;
+	else if (position.y + size >= Graphics::ScreenHeight) {
+		position.y = Graphics::ScreenHeight - size;
 	}
 }
 
 void Raticle::drawCrossRaticle(Graphics& gfx) {
-	const int subX = (int)x;
-	const int subY = (int)y;
+	const int subX = (int)position.x;
+	const int subY = (int)position.y;
 	//Left
 	gfx.PutPixel(subX - 2, subY, r, g, b);
 	gfx.PutPixel(subX - 3, subY, r, g, b);
@@ -103,8 +94,8 @@ void Raticle::drawCrossRaticle(Graphics& gfx) {
 
 void Raticle::drawSquaredRaticle(Graphics& gfx)
 {
-	const int subX = (int)x;
-	const int subY = (int)y;
+	const int subX = (int)position.x;
+	const int subY = (int)position.y;
 	//Upper-Left
 	gfx.PutPixel(subX - 5, subY - 5, r, g, b);
 	gfx.PutPixel(subX - 5, subY - 4, r, g, b);

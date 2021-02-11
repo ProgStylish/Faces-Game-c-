@@ -1,43 +1,40 @@
 #include "Face.h"
 
-void Face::init(float in_x, float in_y, float in_vx, float in_vy)
+void Face::init(Vec2& in_position, Vec2& in_speed)
 {
-	x = in_x;
-	y = in_y;
-	vx = in_vx;
-	vy = in_vy;
+	position = in_position;
+	speed = in_speed;
 	alive = true;
 }
 
 void Face::move(float deltaTime)
 {
-	x += vx * deltaTime;
+	position += speed * deltaTime;
 	clampX();
-	y += vy * deltaTime;
 	clampY();
 }
 
 void Face::clampX()
 {
-	if (x - 1 < 0) {
-		x = 0;
-		vx *= -1;
+	if (position.x < 0) {
+		position.x = 0;
+		speed.x *= -1;
 	}
-	if (x + size > (float)screenWidth) {
-		x = float(screenWidth - size - 1);
-		vx *= -1;
+	if (position.x + size > (float)screenWidth) {
+		position.x = float(screenWidth - size);
+		speed.x *= -1;
 	}
 }
 
 void Face::clampY()
 {
-	if (y - 1 <= 0) {
-		y = 0;
-		vy *= -1;
+	if (position.y < 0) {
+		position.y = 0;
+		speed.y *= -1;
 	}
-	if (y + size >= (float)screenHeight) {
-		y = float(screenHeight - size - 1);
-		vy *= -1;
+	if (position.y + size > (float)screenHeight) {
+		position.y = float(screenHeight - size);
+		speed.y *= -1;
 	}
 }
 
@@ -45,24 +42,14 @@ bool Face::isAlive() {
 	return alive;
 }
 
-float Face::getX() const
+Vec2 Face::getPosition() const
 {
-	return x;
+	return position;
 }
 
-float Face::getY() const
+Vec2 Face::getSpeed() const
 {
-	return y;
-}
-
-float Face::getVX() const
-{
-	return vx;
-}
-
-float Face::getVY() const
-{
-	return vy;
+	return speed;
 }
 
 void Face::setAlive(bool flag) {
@@ -75,8 +62,8 @@ float Face::getSize() {
 
 void Face::draw(Graphics& gfx) const
 {
-	const int subX = (int)x;
-	const int subY = (int)y;
+	const int subX = (int)position.x;
+	const int subY = (int)position.y;
 	gfx.PutPixel(7 + subX, 0 + subY, 0, 0, 0);
 	gfx.PutPixel(8 + subX, 0 + subY, 0, 0, 0);
 	gfx.PutPixel(9 + subX, 0 + subY, 0, 0, 0);

@@ -21,6 +21,7 @@
 #include "MainWindow.h"
 #include "Game.h"
 #include "Face.h"
+#include "Vec2.h"
 
 Game::Game(MainWindow& wnd)
 	:
@@ -31,10 +32,10 @@ Game::Game(MainWindow& wnd)
 	yRange(30.0f, 570.0f),
 	speedRange(-2.5f * 60.0f, 2.5f * 60.0f),
 	square(xRange(rng), yRange(rng)),
-	raticle(Graphics::ScreenWidth / 2, Graphics::ScreenHeight / 2)
+	raticle(Vec2(Graphics::ScreenWidth / 2, Graphics::ScreenHeight / 2))
 {
 	for (int i = 0; i < nFaces; i++) {
-		faces[i].init(xRange(rng), yRange(rng), speedRange(rng), speedRange(rng));
+		faces[i].init(Vec2(xRange(rng),yRange(rng)), Vec2(speedRange(rng), speedRange(rng)));
 	}
 }
 
@@ -48,8 +49,7 @@ void Game::Go()
 }
 
 void Game::UpdateModel()
-{
-
+{	
 	const float deltaTime = frameTime.mark();
 
 	if (wnd.kbd.KeyIsPressed(VK_SPACE)) {
@@ -92,7 +92,9 @@ void Game::ComposeFrame()
 
 bool Game::testShootOnFace(Raticle raticle, Face face)
 {
-	return !((raticle.getX() > face.getX()) && (raticle.getX() < face.getX() + face.getSize()) &&
-		(raticle.getY() > face.getY()) && (raticle.getY() < face.getY() + face.getSize()));
+	return !((raticle.getPosition().x > face.getPosition().x) && 
+		(raticle.getPosition().x < face.getPosition().x + face.getSize()) &&
+		(raticle.getPosition().y > face.getPosition().y) &&
+		(raticle.getPosition().y < face.getPosition().y + face.getSize()));
 }
 
