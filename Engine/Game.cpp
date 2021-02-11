@@ -100,3 +100,4 @@ bool Game::testShootOnFace(Raticle raticle, Face face)
 		(raticle.getPosition().y < face.getPosition().y + face.getSize()));
 }
 
+//just proving
