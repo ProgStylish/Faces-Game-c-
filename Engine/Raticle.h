@@ -1,6 +1,5 @@
 #pragma once
 #include "Graphics.h"
-#include "Keyboard.h"
 #include "Vec2.h"
 class Raticle {
 public:
@@ -10,7 +9,7 @@ public:
 	void clampY();
 	void drawCrossRaticle(Graphics& gfx);
 	void drawSquaredRaticle(Graphics& gfx);
-	void update(Keyboard& kbd);
+	void update(Vec2& speed);
 	float getSize() const;
 	bool getShape() const;
 	void shiftRaticle(bool flag);

@@ -1,23 +1,8 @@
 #include "Graphics.h"
 #include "Raticle.h"
-#include "Keyboard.h"
 
-void Raticle::update(Keyboard& kbd) {
-	if (kbd.KeyIsPressed(VK_UP)) {
-		position.y -= 3;
-	}
-
-	if (kbd.KeyIsPressed(VK_DOWN)) {
-		position.y += 3;
-	}
-
-	if (kbd.KeyIsPressed(VK_RIGHT)) {
-		position.x += 3;
-	}
-
-	if (kbd.KeyIsPressed(VK_LEFT)) {
-		position.x -= 3;
-	}
+void Raticle::update(Vec2& speed) {
+	position -= (position - speed).getNormalized() * 2;
 }
 
 float Raticle::getSize() const{

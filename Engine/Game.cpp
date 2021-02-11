@@ -60,7 +60,9 @@ void Game::UpdateModel()
 		}
 	}
 
-	raticle.update(wnd.kbd);
+	if (wnd.mouse.LeftIsPressed()) {
+		raticle.update(Vec2(wnd.mouse.GetPosX(), wnd.mouse.GetPosY()));
+	}
 	square.shiftBackground();
 
 	for (int i = 0; i < nFaces; i++) {
